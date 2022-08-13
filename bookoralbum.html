@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Book or Album</title>
+<style>
+* {
+    margin: 0px;
+    text-align: center;
+}
+button {
+    font-size: 20px;
+    width: 100px;
+}
+#divimg {
+    display: none;
+    height: 480px;
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: center;
+    align-items: center;
+}
+img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    object-fit: contain;
+    max-height: 480px;
+}
+#divbutts {
+    display: none;
+    margin-left: auto;
+    margin-right: auto;
+    width: 400px;
+    justify-content: center;
+}
+.pb{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+.text{
+    font-size: 20px;
+    line-height: 1.5
+}
+
+</style>
+</head>
+<body>
+<br>
+<h1 style="font-size: 40px">Book or Album?</h1>
+<br>
+<button id="playstart" class="pb" onclick = "playnew()" style="margin-top:150px">Play</button>
+<div>
+    <p id="explain" class="text" style="visibility:hidden;">
+    Here is a segment of an image. <br> It's taken from either a fantasy book cover or a power-metal album cover. <br> Can you guess which one is it?</p>
+</div>
+<div id="divimg">
+    <img id="image"></img>
+</div>
+<br>
+<div id="divresponse" style="height:40px;">
+    <h2 id="response" style="font-size: 30px; font-weight:normal;"></h2>
+</div>
+<br>
+<div>
+    <div id="divbutts">
+        <button id="bookbutt" style="margin-right: 50px;">Book</button>
+        <button id="albumbutt">Album</button>
+    </div>
+    <div id="divplay" style="display:none">
+        <button id="playbutt" class="pb" onclick="playnew()" style="width:140px;">Play again</button>
+    </div>
+</div>
+<br>
+<div id="counter">
+    <p id="correct" class="text" ></p>
+    <p id="wrong" class="text" ></p>
+    <p id="total" class="text" ></p>
+</div>
+<script>
+function getRndInteger(min, max) {
+  return Math.floor(Math.random() * (max - min + 1) ) + min;
+}
+let total = 0
+let correct = 0
+let wrong = 0
+
+function reset() {
+    document.getElementById("divbutts").style.display = "none";
+    document.getElementById("divplay").style.display = "block";
+}
+
+function anscorrect(){
+    total += 1
+    correct += 1
+    document.getElementById("total").innerHTML = "Total tries: " + total;
+    document.getElementById("total").innerHTML = "Total tries: " + total;
+    document.getElementById("correct").innerHTML = "Correct guesses: " + correct;
+    document.getElementById("wrong").innerHTML = "Wrong guesses: " + wrong;
+}
+
+function answrong(){
+    total += 1
+    wrong += 1
+    document.getElementById("total").innerHTML = "Total tries: " + total;
+    document.getElementById("total").innerHTML = "Total tries: " + total;
+    document.getElementById("correct").innerHTML = "Correct guesses: " + correct;
+    document.getElementById("wrong").innerHTML = "Wrong guesses: " + wrong;
+}
+
+function playnew() {
+    document.getElementById("playstart").style.display = "none";
+    document.getElementById("explain").style.visibility = "visible";
+    document.getElementById("divimg").style.display = "flex";
+    document.getElementById("image").style.width = "250px";
+    document.getElementById("divbutts").style.display = "flex";
+    document.getElementById("response").innerHTML = "";
+    document.getElementById("divplay").style.display = "none";
+    if (Math.random() < 0.5) {
+        type = "album"
+        nmbr = getRndInteger(1, 991)
+        document.getElementById("image").src = "assets/album/"+nmbr+"c.jpg"
+        } else {
+        type = "book"
+        nmbr = getRndInteger(1, 993)
+        document.getElementById("image").src = "assets/book/"+nmbr+"c.jpg"
+    }
+
+    function ansalbum() {
+        reset()
+        if (type == "album") {
+            anscorrect()
+            document.getElementById("response").innerHTML = "Correct! it's an album.";
+            document.getElementById("image").src = "assets/album/"+nmbr+"f.jpg";
+            document.getElementById("image").style.width = "400px";
+        } else {
+            answrong()
+            document.getElementById("response").innerHTML = "Wrong! it's a book.";
+            document.getElementById("image").src = "assets/book/"+nmbr+"f.jpg";
+            document.getElementById("image").style.width = "300px";
+        }
+    }
+    function ansbook() {
+        reset()
+        if (type == "book") {
+            anscorrect()
+            document.getElementById("response").innerHTML = "Correct! it's a book.";
+            document.getElementById("image").src = "assets/book/"+nmbr+"f.jpg";
+            document.getElementById("image").style.width = "300px";
+        } else {
+            answrong()
+            document.getElementById("response").innerHTML = "Wrong! it's an album.";
+            document.getElementById("image").src = "assets/album/"+nmbr+"f.jpg";
+            document.getElementById("image").style.width = "400px";
+        }
+    }
+    document.getElementById("albumbutt").onclick = ansalbum;
+    document.getElementById("bookbutt").onclick = ansbook;
+}
+</script>
+
+</body>
+</html>
